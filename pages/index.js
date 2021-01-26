@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import Head from "next/head";
 
@@ -30,7 +31,42 @@ export default function Home() {
   return (
     <QuizBackground backgroundImage={db.bg}>
       <Head>
-        <title>AluraQuiz - Modelo base</title>
+        <title>AluraQuiz - GusDePaula</title>
+        {/* <!-- Primary Meta Tags --> */}
+        <meta name="title" content="AluraQuiz - GusDePaula" />
+        <meta
+          name="description"
+          content="Projeto construido durante a Imersão React edição NextJS da Alura!"
+        />
+
+        {/* <!-- Open Graph / Facebook --> */}
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://imersao-react-quiz.gusdepaula.vercel.app/"
+        />
+        <meta property="og:title" content="AluraQuiz - GusDePaula" />
+        <meta
+          property="og:description"
+          content="Projeto construido durante a Imersão React edição NextJS da Alura!"
+        />
+        <meta
+          property="og:image"
+          content="blob:https://vercel.com/067a36bf-48e8-46b4-9bd2-11c847abfe51"
+        />
+
+        {/* <!-- Twitter --> */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://metatags.io/" />
+        <meta property="twitter:title" content="AluraQuiz - GusDePaula" />
+        <meta
+          property="twitter:description"
+          content="Projeto construido durante a Imersão React edição NextJS da Alura!"
+        />
+        <meta
+          property="twitter:image"
+          content="blob:https://vercel.com/067a36bf-48e8-46b4-9bd2-11c847abfe51"
+        ></meta>
       </Head>
       <QuizContainer>
         <QuizLogo />
