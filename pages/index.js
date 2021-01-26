@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 import db from "./db.json";
 import Widget from "../src/components/Widget";
@@ -28,6 +29,9 @@ const QuizContainer = styled.div`
 `;
 
 export default function Home() {
+  const router = useRouter();
+  const [name, setName] = React.useState("");
+
   return (
     <QuizBackground backgroundImage={db.bg}>
       <Head>
@@ -75,15 +79,34 @@ export default function Home() {
             <h1>Teste</h1>
           </Widget.Header>
           <Widget.Content>
-            <p>lorem lorem lorem</p>
+            <form
+              onSubmit={function (infosDoEvento) {
+                infosDoEvento.preventDefault();
+                router.push(`/quiz?name=${name}`);
+                console.log("Fazendo uma submissão por meio do react");
+              }}
+            >
+              <input
+                onChange={function (infosDoEvento) {
+                  console.log(infosDoEvento.target.value);
+                  // State
+                  // name = infosDoEvento.target.value;
+                  setName(infosDoEvento.target.value);
+                }}
+                placeholder="Diz ai seu nome"
+              />
+              <button type="submit" disabled={name.length === 0}>
+                Jogar {name}
+              </button>
+            </form>
           </Widget.Content>
         </Widget>
         <Widget>
           <Widget.Header>
-            <h1>Teste</h1>
+            <h1>Quizes da Galera</h1>
           </Widget.Header>
           <Widget.Content>
-            <p>lorem lorem lorem</p>
+            <p>lorem ipsum dolor sit amet...</p>
           </Widget.Content>
         </Widget>
         <Footer></Footer>
