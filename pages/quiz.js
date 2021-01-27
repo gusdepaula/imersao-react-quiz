@@ -6,8 +6,17 @@ import QuizContainer from "../src/components/QuizContainer";
 import QuizBackground from "../src/components/QuizBackground";
 import Footer from "../src/components/Footer";
 import GitHubCorner from "../src/components/GitHubCorner";
-import Input from "../src/components/Input";
 import Button from "../src/components/Button";
+
+function LoadingWidget() {
+  return (
+    <Widget>
+      <Widget.Header>Carregando...</Widget.Header>
+
+      <Widget.Content>[Desafio do Loading]</Widget.Content>
+    </Widget>
+  );
+}
 
 export default function QuizPage() {
   return (
@@ -22,9 +31,8 @@ export default function QuizPage() {
             <p>lorem ipsum dolor sit amet...</p>
           </Widget.Content>
         </Widget>
-        <Footer></Footer>
+        <LoadingWidget></LoadingWidget>
       </QuizContainer>
-      <GitHubCorner projectUrl="https://github.com/gusdepaula"></GitHubCorner>
     </QuizBackground>
   );
 }
