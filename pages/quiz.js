@@ -3,8 +3,8 @@ import React from "react";
 import db from "./db.json";
 import Widget from "../src/components/Widget";
 import QuizLogo from "../src/components/QuizLogo";
-import QuizContainer from "../src/components/QuizContainer";
 import QuizBackground from "../src/components/QuizBackground";
+import QuizContainer from "../src/components/QuizContainer";
 import Button from "../src/components/Button";
 
 function LoadingWidget() {
@@ -17,11 +17,12 @@ function LoadingWidget() {
   );
 }
 
-function QuestionWidget({ question, questionIndex, totalQuestions }) {
+function QuestionWidget({ question, questionIndex, totalQuestions, onSubmit }) {
   const questionId = `question__${questionIndex}`;
   return (
     <Widget>
       <Widget.Header>
+        {/* <BackLinkArrow href="/" /> */}
         <h3>{`Pergunta ${questionIndex + 1} de ${totalQuestions}`}</h3>
       </Widget.Header>
       <img
@@ -36,7 +37,12 @@ function QuestionWidget({ question, questionIndex, totalQuestions }) {
       <Widget.Content>
         <h2>{question.title}</h2>
         <p>{question.description}</p>
-        <form>
+        <form
+          onSubmit={(infosDoEvento) => {
+            infosDoEvento.preventDefault();
+            onSubmit();
+          }}
+        >
           {question.alternatives.map((alternative, alternativeIndex) => {
             const alternativeId = `alternative__${alternativeIndex}`;
             return (
@@ -63,12 +69,33 @@ const screenStates = {
   LOADING: "LOADING",
   RESULT: "RESULT",
 };
-
 export default function QuizPage() {
-  const screenState = screenStates.LOADING;
+  const [screenState, setScreenState] = React.useState(screenStates.LOADING);
   const totalQuestions = db.questions.length;
-  const questionIndex = 0;
+  const [currentQuestion, setCurrentQuestion] = React.useState(0);
+  const questionIndex = currentQuestion;
   const question = db.questions[questionIndex];
+
+  // [React chama de: Efeitos || Effects]
+  // React.useEffect
+  // atualizado === willUpdate
+  // morre === willUnmount
+  React.useEffect(() => {
+    // fetch() ...
+    setTimeout(() => {
+      setScreenState(screenStates.QUIZ);
+    }, 1 * 1000);
+    // nasce === didMount
+  }, []);
+
+  function handleSubmitQuiz() {
+    const nextQuestion = questionIndex + 1;
+    if (nextQuestion < totalQuestions) {
+      setCurrentQuestion(nextQuestion);
+    } else {
+      setScreenState(screenStates.RESULT);
+    }
+  }
 
   return (
     <QuizBackground backgroundImage={db.bg}>
