@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import db from "./db.json";
 import Widget from "../src/components/Widget";
@@ -57,7 +58,14 @@ function QuestionWidget({ question, questionIndex, totalQuestions }) {
   );
 }
 
+const screenStates = {
+  QUIZ: "QUIZ",
+  LOADING: "LOADING",
+  RESULT: "RESULT",
+};
+
 export default function QuizPage() {
+  const screenState = screenStates.LOADING;
   const totalQuestions = db.questions.length;
   const questionIndex = 0;
   const question = db.questions[questionIndex];
@@ -66,12 +74,20 @@ export default function QuizPage() {
     <QuizBackground backgroundImage={db.bg}>
       <QuizContainer>
         <QuizLogo />
-        <QuestionWidget
-          question={question}
-          questionIndex={questionIndex}
-          totalQuestions={totalQuestions}
-        />
-        <LoadingWidget />
+        {screenState === screenStates.QUIZ && (
+          <QuestionWidget
+            question={question}
+            questionIndex={questionIndex}
+            totalQuestions={totalQuestions}
+            onSubmit={handleSubmitQuiz}
+          />
+        )}
+
+        {screenState === screenStates.LOADING && <LoadingWidget />}
+
+        {screenState === screenStates.RESULT && (
+          <div>Você acertou X questões, parabéns!</div>
+        )}
       </QuizContainer>
     </QuizBackground>
   );
