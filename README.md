@@ -1,5 +1,5 @@
 <div align="center">
-	<img src="https://raw.githubusercontent.com/gusdepaula/imersao-react-quiz/master/aluraquiz.png" />
+	<img src="aluraquiz.png" />
 </div>
 
 ## :dart: Objetivo
