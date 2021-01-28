@@ -7,6 +7,7 @@ import QuizBackground from "../src/components/QuizBackground";
 import QuizContainer from "../src/components/QuizContainer";
 import AlternativesForm from "../src/components/AlternativesForm";
 import Button from "../src/components/Button";
+import ButtonLogo from "../src/components/ButtonLogo";
 import Loading from "../src/components/Loading";
 
 function ResultWidget({ results }) {
@@ -24,7 +25,7 @@ function ResultWidget({ results }) {
             }
             return somatoriaAtual;
           }, 0)}{" "}
-          questões, parabéns!
+          questões!
         </p>
         <ul>
           {results.map((result, index) => (
@@ -169,7 +170,9 @@ export default function QuizPage() {
   return (
     <QuizBackground backgroundImage={db.bg}>
       <QuizContainer>
-        <QuizLogo />
+        <ButtonLogo as="a" href="/" title="AluraQuiz - GusDePaula">
+          <QuizLogo />
+        </ButtonLogo>
         {screenState === screenStates.QUIZ && (
           <QuestionWidget
             question={question}

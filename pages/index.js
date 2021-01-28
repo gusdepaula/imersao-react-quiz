@@ -12,6 +12,7 @@ import Footer from "../src/components/Footer";
 import GitHubCorner from "../src/components/GitHubCorner";
 import Input from "../src/components/Input";
 import Button from "../src/components/Button";
+import ButtonLogo from "../src/components/ButtonLogo";
 
 // const BackgroundImage = styled.div`
 //   background-image: url(${db.bg});
@@ -65,7 +66,9 @@ export default function Home() {
         ></meta>
       </Head>
       <QuizContainer>
-        <QuizLogo />
+        <ButtonLogo as="a" href="/" title="AluraQuiz - GusDePaula">
+          <QuizLogo />
+        </ButtonLogo>
         <Widget>
           <Widget.Header>
             <h1>AluraQuiz - GusDePaula</h1>
