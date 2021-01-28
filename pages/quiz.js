@@ -7,6 +7,35 @@ import QuizBackground from "../src/components/QuizBackground";
 import QuizContainer from "../src/components/QuizContainer";
 import Button from "../src/components/Button";
 
+function ResultWidget({ results }) {
+  return (
+    <Widget>
+      <Widget.Header>Tela de Resultado</Widget.Header>
+
+      <Widget.Content>
+        <p>
+          Você acertou{" "}
+          {results.reduce((somatoriaAtual, resultAtual) => {
+            const isAcerto = resultAtual === true;
+            if (isAcerto) {
+              return somatoriaAtual + 1;
+            }
+            return somatoriaAtual;
+          }, 0)}{" "}
+          questões, parabéns!
+        </p>
+        <ul>
+          {results.map((result, index) => (
+            <li>
+              #{index + 1} Resultado: {result === true ? "Acertou" : "Errou"}
+            </li>
+          ))}
+        </ul>
+      </Widget.Content>
+    </Widget>
+  );
+}
+
 function LoadingWidget() {
   return (
     <Widget>
@@ -90,7 +119,8 @@ const screenStates = {
   RESULT: "RESULT",
 };
 export default function QuizPage() {
-  const [screenState, setScreenState] = React.useState(screenStates.LOADING);
+  const [screenState, setScreenState] = React.useState(screenStates.RESULT);
+  const [results, setResults] = React.useState([true, false, true]);
   const totalQuestions = db.questions.length;
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   const questionIndex = currentQuestion;
@@ -103,7 +133,7 @@ export default function QuizPage() {
   React.useEffect(() => {
     // fetch() ...
     setTimeout(() => {
-      setScreenState(screenStates.QUIZ);
+      //   setScreenState(screenStates.QUIZ);
     }, 1 * 1000);
     // nasce === didMount
   }, []);
@@ -133,7 +163,7 @@ export default function QuizPage() {
         {screenState === screenStates.LOADING && <LoadingWidget />}
 
         {screenState === screenStates.RESULT && (
-          <div>Você acertou X questões, parabéns!</div>
+          <ResultWidget results={results} />
         )}
       </QuizContainer>
     </QuizBackground>
