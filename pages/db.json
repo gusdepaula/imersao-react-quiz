@@ -19,6 +19,27 @@
         "background: linear-gradient(#e66465, #9198e5);",
         "background: gradient(#e66465, #9198e5);"
       ]
+    },
+    {
+      "image": "https://media.giphy.com/media/l2Je6Wrl7XjclNUDC/giphy.gif",
+      "title": "Em CSS, como você selecionaria todas as tags <p> em uma página?",
+      "description": "<p>Texto aqui</p>",
+      "answer": 1,
+      "alternatives": ["#p { }", "p { }", "<p> { }", ".p { }"]
+    },
+    {
+      "image": "https://media.giphy.com/media/Hcw7rjsIsHcmk/giphy.gif",
+      "title": "Em CSS, como você selecionaria essa imagem usando seu id?",
+      "description": "<img id='mainpic' src='cat.png'>",
+      "answer": 2,
+      "alternatives": [".mainpic { }", "img { }", "#mainpic { }", "mainpic { }"]
+    },
+    {
+      "image": "https://media.giphy.com/media/26tk0dpvvvvK20LaU/giphy.gif",
+      "title": "Em CSS, como você selecionaria apenas os parágrafos com o nome de classe 'warning'?",
+      "description": "<p class='warning'>Não faça isso</p>",
+      "answer": 3,
+      "alternatives": ["warning { }", "#warning { }", "p { }", ".warning { }"]
     }
   ],
   "external": [""],

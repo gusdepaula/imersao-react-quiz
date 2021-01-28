@@ -68,9 +68,13 @@ export default function Home() {
         <QuizLogo />
         <Widget>
           <Widget.Header>
-            <h1>Teste</h1>
+            <h1>AluraQuiz - GusDePaula</h1>
           </Widget.Header>
           <Widget.Content>
+            <p>
+              Teste os seus conhecimentos sobre CSS e vamos ver quantos layouts
+              você vai deixar de quebrar
+            </p>
             <form
               onSubmit={function (infosDoEvento) {
                 infosDoEvento.preventDefault();
@@ -90,14 +94,6 @@ export default function Home() {
                 {`Jogar ${name}`}
               </Button>
             </form>
-          </Widget.Content>
-        </Widget>
-        <Widget>
-          <Widget.Header>
-            <h1>Quizes da Galera</h1>
-          </Widget.Header>
-          <Widget.Content>
-            <p>lorem ipsum dolor sit amet...</p>
           </Widget.Content>
         </Widget>
         <Footer></Footer>
