@@ -5,6 +5,7 @@ import Widget from "../src/components/Widget";
 import QuizLogo from "../src/components/QuizLogo";
 import QuizBackground from "../src/components/QuizBackground";
 import QuizContainer from "../src/components/QuizContainer";
+import AlternativesForm from "../src/components/AlternativesForm";
 import Button from "../src/components/Button";
 
 function ResultWidget({ results }) {
@@ -26,7 +27,7 @@ function ResultWidget({ results }) {
         </p>
         <ul>
           {results.map((result, index) => (
-            <li>
+            <li key={`result__${index}`}>
               #{index + 1} Resultado: {result === true ? "Acertou" : "Errou"}
             </li>
           ))}
@@ -46,7 +47,13 @@ function LoadingWidget() {
   );
 }
 
-function QuestionWidget({ question, questionIndex, totalQuestions, onSubmit }) {
+function QuestionWidget({
+  question,
+  questionIndex,
+  totalQuestions,
+  onSubmit,
+  addResults,
+}) {
   const [selectedAlternative, setSelectedAlternative] = React.useState(
     undefined
   );
@@ -72,11 +79,12 @@ function QuestionWidget({ question, questionIndex, totalQuestions, onSubmit }) {
       <Widget.Content>
         <h2>{question.title}</h2>
         <p>{question.description}</p>
-        <form
+        <AlternativesForm
           onSubmit={(infosDoEvento) => {
             infosDoEvento.preventDefault();
             setIsQuestionSubmited(true);
             setTimeout(() => {
+              addResults(isCorrect);
               onSubmit();
               setIsQuestionSubmited(false);
               setSelectedAlternative(undefined);
@@ -85,14 +93,18 @@ function QuestionWidget({ question, questionIndex, totalQuestions, onSubmit }) {
         >
           {question.alternatives.map((alternative, alternativeIndex) => {
             const alternativeId = `alternative__${alternativeIndex}`;
+            const alternativeStatus = isCorrect ? "SUCCESS" : "ERROR";
+            const isSelected = selectedAlternative === alternativeIndex;
             return (
               <Widget.Topic
                 as="label"
                 key={alternativeId}
                 htmlFor={alternativeId}
+                data-selected={isSelected}
+                data-status={isQuestionSubmited && alternativeStatus}
               >
                 <input
-                  // style={{ display: 'none' }}
+                  style={{ display: "none" }}
                   id={alternativeId}
                   name={questionId}
                   type="radio"
@@ -107,7 +119,7 @@ function QuestionWidget({ question, questionIndex, totalQuestions, onSubmit }) {
           <Button type="submit" disabled={!hasAlternativeSelected}>
             Confirmar
           </Button>
-        </form>
+        </AlternativesForm>
       </Widget.Content>
     </Widget>
   );
@@ -119,12 +131,16 @@ const screenStates = {
   RESULT: "RESULT",
 };
 export default function QuizPage() {
-  const [screenState, setScreenState] = React.useState(screenStates.RESULT);
-  const [results, setResults] = React.useState([true, false, true]);
+  const [screenState, setScreenState] = React.useState(screenStates.LOADING);
+  const [results, setResults] = React.useState([]);
   const totalQuestions = db.questions.length;
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   const questionIndex = currentQuestion;
   const question = db.questions[questionIndex];
+
+  function addResults(result) {
+    setResults([...results, result]);
+  }
 
   // [React chama de: Efeitos || Effects]
   // React.useEffect
@@ -133,7 +149,7 @@ export default function QuizPage() {
   React.useEffect(() => {
     // fetch() ...
     setTimeout(() => {
-      //   setScreenState(screenStates.QUIZ);
+      setScreenState(screenStates.QUIZ);
     }, 1 * 1000);
     // nasce === didMount
   }, []);
@@ -157,6 +173,7 @@ export default function QuizPage() {
             questionIndex={questionIndex}
             totalQuestions={totalQuestions}
             onSubmit={handleSubmitQuiz}
+            addResults={addResults}
           />
         )}
 
