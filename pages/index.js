@@ -2,9 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { motion } from "framer-motion";
 
 import db from "./db.json";
 import Widget from "../src/components/Widget";
+import Link from "../src/components/Link";
 import QuizLogo from "../src/components/QuizLogo";
 import QuizContainer from "../src/components/QuizContainer";
 import QuizBackground from "../src/components/QuizBackground";
@@ -69,7 +71,16 @@ export default function Home() {
         <ButtonLogo as="a" href="/" title="AluraQuiz - GusDePaula">
           <QuizLogo />
         </ButtonLogo>
-        <Widget>
+        <Widget
+          as={motion.section}
+          transition={{ delay: 0, duration: 0.5 }}
+          variants={{
+            show: { opacity: 1, y: "0" },
+            hidden: { opacity: 0, y: "100%" },
+          }}
+          initial="hidden"
+          animate="show"
+        >
           <Widget.Header>
             <h1>AluraQuiz - GusDePaula</h1>
           </Widget.Header>
@@ -99,7 +110,16 @@ export default function Home() {
             </form>
           </Widget.Content>
         </Widget>
-        <Widget>
+        <Widget
+          as={motion.section}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          variants={{
+            show: { opacity: 1 },
+            hidden: { opacity: 0 },
+          }}
+          initial="hidden"
+          animate="show"
+        >
           <Widget.Content>
             <h1>Quizes da Galera</h1>
             <ul>
@@ -109,9 +129,13 @@ export default function Home() {
                   .replace("https:", "")
                   .replace(".vercel.app", "")
                   .split(".");
+
                 return (
                   <li key={linkExterno}>
-                    <Widget.Topic href={linkExterno} target="_blank">
+                    <Widget.Topic
+                      as={Link}
+                      href={`/quiz/${projectName}___${githubUser}`}
+                    >
                       {`${githubUser}/${projectName}`}
                     </Widget.Topic>
                   </li>
@@ -120,7 +144,16 @@ export default function Home() {
             </ul>
           </Widget.Content>
         </Widget>
-        <Footer></Footer>
+        <Footer
+          as={motion.footer}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          variants={{
+            show: { opacity: 1 },
+            hidden: { opacity: 0 },
+          }}
+          initial="hidden"
+          animate="show"
+        />
       </QuizContainer>
       <GitHubCorner projectUrl="https://github.com/gusdepaula"></GitHubCorner>
     </QuizBackground>
